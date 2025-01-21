@@ -1,0 +1,5 @@
+library(readxl)
+library(dplyr)
+data <- read.csv("C:/Users/Vincent/OneDrive - UW/Desktop/dataset.csv")
+View(data)
+length(unique(data$hospital_id))

@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>exploring-apache-score</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="Exploring APACHE Score_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Exploring APACHE Score_files/libs/quarto-html/quarto.js"></script>
+<script src="Exploring APACHE Score_files/libs/quarto-html/popper.min.js"></script>
+<script src="Exploring APACHE Score_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Exploring APACHE Score_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Exploring APACHE Score_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Exploring APACHE Score_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Exploring APACHE Score_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Exploring APACHE Score_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Exploring APACHE Score_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="analysis-of-the-apache-score" class="level1">
+<h1>Analysis of the APACHE Score</h1>
+<p>We will be exploring the variables used in the APACHE scoring system and its relavance to Hospital Mortality rate. Then, we aim to evaluate the scoring system potentially suggesting factors to be included and factors to be omitted.</p>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<section id="what-is-apache-score" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-apache-score">What is APACHE Score?</h3>
+<p><strong>APACHE (“Acute Physiology and Chronoic Health Evalution”)</strong> is a severity-of-disease classification system used in Intensive Care Units (ICU). It is applied within the first 24 hours of a patient’s admission to an ICU. In this system, patients are assigned a score ranging from 0 to 71, with higher scores indicating more severe disease and a higher risk of death. This score is only determined at admission and is not recalculated during the stay. There are various versions of the APACHE score, starting from APACHE I and extending to the latest, APACHE IV. In this analysis, we will focus exclusively on APACHE II, III, and IV. The APACHE score directly influences patient care, as certain procedures or medications are administered based on specific APACHE scores. Additionally, it serves as a tool for comparing patient morbidity. Despite the existence of many versions, APACHE II remains the most commonly used due to its extensive documentation. It is also important to note that these scores are applicable only to patients aged 16 or older.</p>
+</section>
+<section id="how-is-the-score-determined" class="level3">
+<h3 class="anchored" data-anchor-id="how-is-the-score-determined">How is the score determined?</h3>
+<p>There are different version of the APACHE scoring system, and consequently each scoring system differs. In this section, I will be going through each scoring system.</p>
+<section id="apache-ii" class="level4">
+<h4 class="anchored" data-anchor-id="apache-ii">APACHE II</h4>
+<p>The score is determined based on 12 main factors, the patients age, and chronic health status, ranging from 0 to 71.</p>
+<ul>
+<li>Acute Physiology Score (Measured in the first 24H)
+<ol type="1">
+<li>AaDO2 or PaO2 (for FiO2≥0.5 or &lt;0.5, respectively)</li>
+<li>body temperature (rectal)</li>
+<li>mean arterial pressure</li>
+<li>blood pH</li>
+<li>heart rate</li>
+<li>respiratory rate</li>
+<li>serum sodium</li>
+<li>serum potassium</li>
+<li>creatinine (Double point score for acute renal failure)</li>
+<li>hematocrit</li>
+<li>white blood cell count</li>
+<li>Glasgow Coma Scale (15 minus actual GCS)</li>
+</ol></li>
+<li>Age</li>
+</ul>
+<table class="table">
+<thead>
+<tr class="header">
+<th>AGE</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>≤44</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>45-54</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>55-64</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>65-74</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>≥75</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Chronic Health Points Additional points is assigned to patients who has a history of severe organ system insufficiency or is immunocompromised</li>
+</ul>
+</section>
+<section id="apache-iii" class="level4">
+<h4 class="anchored" data-anchor-id="apache-iii">APACHE III</h4>
+<p>Consists of two components: the APACHE III score and APACHE III predictive equation *APACHE III Score The APACHE III score is a scale ranging from 0 to 299 points. It is determined using similar metrics as the APACHE II score, but it also includes an additional pysiologic variables and its assessment of chonric health status is different too. Additionally, the APACHE III score offers a wider range of diagnosis categories compared to APACHE II.</p>
+<p>*APACHE III Predictive Equation The APACHE III predicitve equation predicts the hospital mortality rate of patients using the APACHE III score and reference data on major disease categories and treatment location immediately prior to ICU admission to provide risk estimates for hospital mortality for individual ICU patients.</p>
+</section>
+<section id="apache-iv" class="level4">
+<h4 class="anchored" data-anchor-id="apache-iv">APACHE IV</h4>
+<p>The most recent version of the APACHE score and is the recommended version. It also includeds a greater number of variables and adjusted to reflect modern medical practices in the ICU. Also more accurately predicts hospital mortality rate compared to that of APACHE III. There is no range for the APACHE IV score.</p>
+</section>
+</section>
+</section>
+<section id="data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
+<p>For our following analysis, we will be looking at the APACHE II scoring method as it is the most well dcoumented and widely used scoring system.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#importanting packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> logit</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multitest <span class="im">import</span> multipletests</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load the dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>patients <span class="op">=</span> pd.read_csv(<span class="st">"dataset.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>patients.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 91713 entries, 0 to 91712
+Data columns (total 85 columns):
+ #   Column                         Non-Null Count  Dtype  
+---  ------                         --------------  -----  
+ 0   encounter_id                   91713 non-null  int64  
+ 1   patient_id                     91713 non-null  int64  
+ 2   hospital_id                    91713 non-null  int64  
+ 3   age                            87485 non-null  float64
+ 4   bmi                            88284 non-null  float64
+ 5   elective_surgery               91713 non-null  int64  
+ 6   ethnicity                      90318 non-null  object 
+ 7   gender                         91688 non-null  object 
+ 8   height                         90379 non-null  float64
+ 9   icu_admit_source               91601 non-null  object 
+ 10  icu_id                         91713 non-null  int64  
+ 11  icu_stay_type                  91713 non-null  object 
+ 12  icu_type                       91713 non-null  object 
+ 13  pre_icu_los_days               91713 non-null  float64
+ 14  weight                         88993 non-null  float64
+ 15  apache_2_diagnosis             90051 non-null  float64
+ 16  apache_3j_diagnosis            90612 non-null  float64
+ 17  apache_post_operative          91713 non-null  int64  
+ 18  arf_apache                     90998 non-null  float64
+ 19  gcs_eyes_apache                89812 non-null  float64
+ 20  gcs_motor_apache               89812 non-null  float64
+ 21  gcs_unable_apache              90676 non-null  float64
+ 22  gcs_verbal_apache              89812 non-null  float64
+ 23  heart_rate_apache              90835 non-null  float64
+ 24  intubated_apache               90998 non-null  float64
+ 25  map_apache                     90719 non-null  float64
+ 26  resprate_apache                90479 non-null  float64
+ 27  temp_apache                    87605 non-null  float64
+ 28  ventilated_apache              90998 non-null  float64
+ 29  d1_diasbp_max                  91548 non-null  float64
+ 30  d1_diasbp_min                  91548 non-null  float64
+ 31  d1_diasbp_noninvasive_max      90673 non-null  float64
+ 32  d1_diasbp_noninvasive_min      90673 non-null  float64
+ 33  d1_heartrate_max               91568 non-null  float64
+ 34  d1_heartrate_min               91568 non-null  float64
+ 35  d1_mbp_max                     91493 non-null  float64
+ 36  d1_mbp_min                     91493 non-null  float64
+ 37  d1_mbp_noninvasive_max         90234 non-null  float64
+ 38  d1_mbp_noninvasive_min         90234 non-null  float64
+ 39  d1_resprate_max                91328 non-null  float64
+ 40  d1_resprate_min                91328 non-null  float64
+ 41  d1_spo2_max                    91380 non-null  float64
+ 42  d1_spo2_min                    91380 non-null  float64
+ 43  d1_sysbp_max                   91554 non-null  float64
+ 44  d1_sysbp_min                   91554 non-null  float64
+ 45  d1_sysbp_noninvasive_max       90686 non-null  float64
+ 46  d1_sysbp_noninvasive_min       90686 non-null  float64
+ 47  d1_temp_max                    89389 non-null  float64
+ 48  d1_temp_min                    89389 non-null  float64
+ 49  h1_diasbp_max                  88094 non-null  float64
+ 50  h1_diasbp_min                  88094 non-null  float64
+ 51  h1_diasbp_noninvasive_max      84363 non-null  float64
+ 52  h1_diasbp_noninvasive_min      84363 non-null  float64
+ 53  h1_heartrate_max               88923 non-null  float64
+ 54  h1_heartrate_min               88923 non-null  float64
+ 55  h1_mbp_max                     87074 non-null  float64
+ 56  h1_mbp_min                     87074 non-null  float64
+ 57  h1_mbp_noninvasive_max         82629 non-null  float64
+ 58  h1_mbp_noninvasive_min         82629 non-null  float64
+ 59  h1_resprate_max                87356 non-null  float64
+ 60  h1_resprate_min                87356 non-null  float64
+ 61  h1_spo2_max                    87528 non-null  float64
+ 62  h1_spo2_min                    87528 non-null  float64
+ 63  h1_sysbp_max                   88102 non-null  float64
+ 64  h1_sysbp_min                   88102 non-null  float64
+ 65  h1_sysbp_noninvasive_max       84372 non-null  float64
+ 66  h1_sysbp_noninvasive_min       84372 non-null  float64
+ 67  d1_glucose_max                 85906 non-null  float64
+ 68  d1_glucose_min                 85906 non-null  float64
+ 69  d1_potassium_max               82128 non-null  float64
+ 70  d1_potassium_min               82128 non-null  float64
+ 71  apache_4a_hospital_death_prob  83766 non-null  float64
+ 72  apache_4a_icu_death_prob       83766 non-null  float64
+ 73  aids                           90998 non-null  float64
+ 74  cirrhosis                      90998 non-null  float64
+ 75  diabetes_mellitus              90998 non-null  float64
+ 76  hepatic_failure                90998 non-null  float64
+ 77  immunosuppression              90998 non-null  float64
+ 78  leukemia                       90998 non-null  float64
+ 79  lymphoma                       90998 non-null  float64
+ 80  solid_tumor_with_metastasis    90998 non-null  float64
+ 81  apache_3j_bodysystem           90051 non-null  object 
+ 82  apache_2_bodysystem            90051 non-null  object 
+ 83  Unnamed: 83                    0 non-null      float64
+ 84  hospital_death                 91713 non-null  int64  
+dtypes: float64(71), int64(7), object(7)
+memory usage: 59.5+ MB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Filtered only columns that contribute to the apache score.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#dropped all values of h1 (first hour measurements) and columns that are already</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#described by columns with apache. This includes all blood pressure columns (sysbp, diabp, mbp)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#as arterial pressure is strongly correlated with blood pressure.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>apache_score <span class="op">=</span> patients.iloc[:, [<span class="dv">3</span>] <span class="op">+</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">17</span>,<span class="dv">29</span>)) <span class="op">+</span> [<span class="dv">41</span>, <span class="dv">42</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                             <span class="op">+</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">67</span>,<span class="dv">71</span>)) <span class="op">+</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">73</span>,<span class="dv">81</span>)) <span class="op">+</span> [<span class="dv">84</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Datas cleaning: create a new column summing the gcs scores, and drop the those columns.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>apache_score[<span class="st">"gcs_score_apache"</span>] <span class="op">=</span> apache_score.loc[apache_score[<span class="st">"gcs_unable_apache"</span>] <span class="op">==</span> <span class="dv">0</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                                                [<span class="st">"gcs_eyes_apache"</span>, <span class="st">"gcs_motor_apache"</span>, <span class="st">"gcs_verbal_apache"</span>]].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>apache_score <span class="op">=</span> apache_score.drop([<span class="st">"gcs_eyes_apache"</span>, <span class="st">"gcs_motor_apache"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"gcs_verbal_apache"</span>, <span class="st">"gcs_unable_apache"</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                  axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\Vincent\AppData\Local\Temp\ipykernel_54944\1999117668.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  apache_score["gcs_score_apache"] = apache_score.loc[apache_score["gcs_unable_apache"] == 0,</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#reordered columns so that nonbinary variables are at the front and binary variables</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#are at the back. Also, hospital_death is the last variable this will simplify code later on.</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>binary_cols <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> apache_score.columns <span class="cf">if</span> apache_score[col].nunique() <span class="op">==</span> <span class="dv">2</span>]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>nonbinary_cols <span class="op">=</span> [c <span class="cf">for</span> c <span class="kw">in</span> apache_score <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> binary_cols]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>apache_score <span class="op">=</span> apache_score[nonbinary_cols <span class="op">+</span> binary_cols]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>epsilon <span class="op">=</span> <span class="fl">1e-5</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>logit_apache <span class="op">=</span> apache_score.copy()</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>logit_apache[<span class="st">"hospital_death"</span>] <span class="op">=</span> logit_apache[<span class="st">"hospital_death"</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> p: logit(<span class="bu">max</span>(<span class="bu">min</span>(p, <span class="dv">1</span><span class="op">-</span>epsilon), epsilon)))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>apache_score.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>Index(['age', 'heart_rate_apache', 'map_apache', 'resprate_apache',
+       'temp_apache', 'd1_spo2_max', 'd1_spo2_min', 'd1_glucose_max',
+       'd1_glucose_min', 'd1_potassium_max', 'd1_potassium_min',
+       'gcs_score_apache', 'apache_post_operative', 'arf_apache',
+       'intubated_apache', 'ventilated_apache', 'aids', 'cirrhosis',
+       'diabetes_mellitus', 'hepatic_failure', 'immunosuppression', 'leukemia',
+       'lymphoma', 'solid_tumor_with_metastasis', 'hospital_death'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<p>From the dataset, we see that not all measurements are included. For example, we do not see hemacrit, white blood cell count, creatinine, sodium, and pH level. But that is okay, we will just do are analysis of the data at hand. Quick note: In columns labeled “apache,” the value selected corresponds to the more extreme measurement, thus yielding a higher Apache score. This approach involves comparing both the lowest and highest measurements within a given parameter and choosing the one that deviates most significantly from typical human values. For instance, when assessing temperature over the initial 24-hour period, both the minimum and maximum temperatures are considered, and the value that is most anomalously distant from a normal human temperature is chosen.</p>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot(data, variable, ax, <span class="bu">type</span><span class="op">=</span><span class="st">"scatter"</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Ploting continuous variable versus Hospital Death"""</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> data.loc[:, [variable, <span class="st">"hospital_death"</span>]].groupby(variable).mean().reset_index()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span>variable, y<span class="op">=</span><span class="st">"hospital_death"</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    ax.set_title(variable <span class="op">+</span> <span class="st">" versus ICU Survival Rate"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Average Hospital Death"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> barplot(data, variable, ax):</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Ploting binary variable versus Hospital Death"""</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> data.loc[:, [variable, <span class="st">"hospital_death"</span>]].groupby(variable).mean().reset_index()</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    sns.barplot(data<span class="op">=</span>df, x<span class="op">=</span>variable, y<span class="op">=</span><span class="st">"hospital_death"</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    ax.set_title(variable <span class="op">+</span> <span class="st">" versus ICU Survival Rate"</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Average Hospital Death"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">6</span>, ncols<span class="op">=</span><span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">15</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>col <span class="op">=</span> apache_score.columns.tolist()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">6</span>):</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axes[i, j]</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            plot(logit_apache, col[<span class="dv">4</span> <span class="op">*</span> i <span class="op">+</span> j], ax)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            barplot(logit_apache, col[<span class="dv">4</span> <span class="op">*</span> i <span class="op">+</span> j], ax)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Exploring%20APACHE%20Score_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>apache_score.corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>age</th>
+      <th>heart_rate_apache</th>
+      <th>map_apache</th>
+      <th>resprate_apache</th>
+      <th>temp_apache</th>
+      <th>d1_spo2_max</th>
+      <th>d1_spo2_min</th>
+      <th>d1_glucose_max</th>
+      <th>d1_glucose_min</th>
+      <th>d1_potassium_max</th>
+      <th>...</th>
+      <th>ventilated_apache</th>
+      <th>aids</th>
+      <th>cirrhosis</th>
+      <th>diabetes_mellitus</th>
+      <th>hepatic_failure</th>
+      <th>immunosuppression</th>
+      <th>leukemia</th>
+      <th>lymphoma</th>
+      <th>solid_tumor_with_metastasis</th>
+      <th>hospital_death</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>age</th>
+      <td>1.000000</td>
+      <td>-0.149495</td>
+      <td>-0.015870</td>
+      <td>0.037328</td>
+      <td>-0.082265</td>
+      <td>-0.038621</td>
+      <td>-0.084488</td>
+      <td>0.012538</td>
+      <td>0.067118</td>
+      <td>0.061185</td>
+      <td>...</td>
+      <td>0.041296</td>
+      <td>-0.029477</td>
+      <td>-0.028065</td>
+      <td>0.077908</td>
+      <td>-0.020061</td>
+      <td>0.025007</td>
+      <td>0.030310</td>
+      <td>0.023335</td>
+      <td>0.025924</td>
+      <td>0.111017</td>
+    </tr>
+    <tr>
+      <th>heart_rate_apache</th>
+      <td>-0.149495</td>
+      <td>1.000000</td>
+      <td>0.025953</td>
+      <td>0.193308</td>
+      <td>0.102116</td>
+      <td>0.017866</td>
+      <td>-0.092638</td>
+      <td>0.104876</td>
+      <td>0.061645</td>
+      <td>0.010401</td>
+      <td>...</td>
+      <td>0.120391</td>
+      <td>0.008800</td>
+      <td>0.010737</td>
+      <td>-0.016401</td>
+      <td>0.012787</td>
+      <td>0.054844</td>
+      <td>0.019983</td>
+      <td>0.017311</td>
+      <td>0.040893</td>
+      <td>0.107818</td>
+    </tr>
+    <tr>
+      <th>map_apache</th>
+      <td>-0.015870</td>
+      <td>0.025953</td>
+      <td>1.000000</td>
+      <td>0.105596</td>
+      <td>-0.011528</td>
+      <td>-0.036190</td>
+      <td>0.020109</td>
+      <td>0.012725</td>
+      <td>0.051487</td>
+      <td>-0.043031</td>
+      <td>...</td>
+      <td>-0.030714</td>
+      <td>0.001483</td>
+      <td>-0.032030</td>
+      <td>0.000761</td>
+      <td>-0.041395</td>
+      <td>-0.015864</td>
+      <td>-0.016722</td>
+      <td>-0.012037</td>
+      <td>-0.008119</td>
+      <td>-0.040526</td>
+    </tr>
+    <tr>
+      <th>resprate_apache</th>
+      <td>0.037328</td>
+      <td>0.193308</td>
+      <td>0.105596</td>
+      <td>1.000000</td>
+      <td>0.046330</td>
+      <td>-0.060292</td>
+      <td>-0.069038</td>
+      <td>0.028642</td>
+      <td>0.036197</td>
+      <td>-0.013878</td>
+      <td>...</td>
+      <td>0.021346</td>
+      <td>0.012408</td>
+      <td>-0.001509</td>
+      <td>-0.010125</td>
+      <td>-0.004468</td>
+      <td>0.034752</td>
+      <td>0.017879</td>
+      <td>0.011205</td>
+      <td>0.012371</td>
+      <td>0.086666</td>
+    </tr>
+    <tr>
+      <th>temp_apache</th>
+      <td>-0.082265</td>
+      <td>0.102116</td>
+      <td>-0.011528</td>
+      <td>0.046330</td>
+      <td>1.000000</td>
+      <td>-0.046715</td>
+      <td>0.070477</td>
+      <td>-0.082870</td>
+      <td>0.031723</td>
+      <td>-0.116648</td>
+      <td>...</td>
+      <td>-0.135643</td>
+      <td>0.001726</td>
+      <td>-0.018497</td>
+      <td>-0.001163</td>
+      <td>-0.022059</td>
+      <td>0.006496</td>
+      <td>0.003900</td>
+      <td>-0.001283</td>
+      <td>-0.000784</td>
+      <td>-0.158634</td>
+    </tr>
+    <tr>
+      <th>d1_spo2_max</th>
+      <td>-0.038621</td>
+      <td>0.017866</td>
+      <td>-0.036190</td>
+      <td>-0.060292</td>
+      <td>-0.046715</td>
+      <td>1.000000</td>
+      <td>0.095330</td>
+      <td>0.007258</td>
+      <td>-0.089667</td>
+      <td>0.040519</td>
+      <td>...</td>
+      <td>0.130799</td>
+      <td>0.003945</td>
+      <td>0.016682</td>
+      <td>0.012247</td>
+      <td>0.017533</td>
+      <td>0.007783</td>
+      <td>0.003627</td>
+      <td>0.000664</td>
+      <td>0.000904</td>
+      <td>-0.008482</td>
+    </tr>
+    <tr>
+      <th>d1_spo2_min</th>
+      <td>-0.084488</td>
+      <td>-0.092638</td>
+      <td>0.020109</td>
+      <td>-0.069038</td>
+      <td>0.070477</td>
+      <td>0.095330</td>
+      <td>1.000000</td>
+      <td>-0.035291</td>
+      <td>-0.011863</td>
+      <td>-0.105511</td>
+      <td>...</td>
+      <td>-0.119281</td>
+      <td>0.003664</td>
+      <td>-0.004327</td>
+      <td>0.002829</td>
+      <td>-0.008266</td>
+      <td>-0.017636</td>
+      <td>-0.017838</td>
+      <td>-0.009755</td>
+      <td>-0.010799</td>
+      <td>-0.210100</td>
+    </tr>
+    <tr>
+      <th>d1_glucose_max</th>
+      <td>0.012538</td>
+      <td>0.104876</td>
+      <td>0.012725</td>
+      <td>0.028642</td>
+      <td>-0.082870</td>
+      <td>0.007258</td>
+      <td>-0.035291</td>
+      <td>1.000000</td>
+      <td>0.383948</td>
+      <td>0.188481</td>
+      <td>...</td>
+      <td>0.098384</td>
+      <td>-0.011494</td>
+      <td>-0.002330</td>
+      <td>0.412437</td>
+      <td>-0.007744</td>
+      <td>-0.006710</td>
+      <td>-0.005860</td>
+      <td>-0.002676</td>
+      <td>-0.014106</td>
+      <td>0.081568</td>
+    </tr>
+    <tr>
+      <th>d1_glucose_min</th>
+      <td>0.067118</td>
+      <td>0.061645</td>
+      <td>0.051487</td>
+      <td>0.036197</td>
+      <td>0.031723</td>
+      <td>-0.089667</td>
+      <td>-0.011863</td>
+      <td>0.383948</td>
+      <td>1.000000</td>
+      <td>-0.001242</td>
+      <td>...</td>
+      <td>-0.014534</td>
+      <td>-0.008798</td>
+      <td>-0.015519</td>
+      <td>0.139184</td>
+      <td>-0.017682</td>
+      <td>0.003988</td>
+      <td>-0.004478</td>
+      <td>0.000885</td>
+      <td>0.011143</td>
+      <td>0.029884</td>
+    </tr>
+    <tr>
+      <th>d1_potassium_max</th>
+      <td>0.061185</td>
+      <td>0.010401</td>
+      <td>-0.043031</td>
+      <td>-0.013878</td>
+      <td>-0.116648</td>
+      <td>0.040519</td>
+      <td>-0.105511</td>
+      <td>0.188481</td>
+      <td>-0.001242</td>
+      <td>1.000000</td>
+      <td>...</td>
+      <td>0.159426</td>
+      <td>0.001143</td>
+      <td>0.019026</td>
+      <td>0.097990</td>
+      <td>0.016702</td>
+      <td>-0.001993</td>
+      <td>0.005920</td>
+      <td>0.002215</td>
+      <td>-0.001841</td>
+      <td>0.112465</td>
+    </tr>
+    <tr>
+      <th>d1_potassium_min</th>
+      <td>0.111465</td>
+      <td>-0.070167</td>
+      <td>-0.028974</td>
+      <td>-0.005029</td>
+      <td>0.010856</td>
+      <td>-0.039748</td>
+      <td>-0.047429</td>
+      <td>-0.043355</td>
+      <td>0.095463</td>
+      <td>0.643061</td>
+      <td>...</td>
+      <td>-0.034335</td>
+      <td>0.002694</td>
+      <td>0.012544</td>
+      <td>0.038064</td>
+      <td>0.009905</td>
+      <td>0.004230</td>
+      <td>-0.000508</td>
+      <td>0.004835</td>
+      <td>0.012820</td>
+      <td>0.025080</td>
+    </tr>
+    <tr>
+      <th>gcs_score_apache</th>
+      <td>0.008792</td>
+      <td>-0.107592</td>
+      <td>-0.000744</td>
+      <td>-0.000746</td>
+      <td>0.167434</td>
+      <td>-0.108231</td>
+      <td>0.100219</td>
+      <td>-0.089510</td>
+      <td>0.044365</td>
+      <td>-0.084282</td>
+      <td>...</td>
+      <td>-0.547693</td>
+      <td>-0.003358</td>
+      <td>-0.012186</td>
+      <td>0.022966</td>
+      <td>-0.010012</td>
+      <td>0.022029</td>
+      <td>0.005871</td>
+      <td>0.007954</td>
+      <td>0.015662</td>
+      <td>-0.284097</td>
+    </tr>
+    <tr>
+      <th>apache_post_operative</th>
+      <td>0.059246</td>
+      <td>-0.055357</td>
+      <td>-0.004632</td>
+      <td>-0.145773</td>
+      <td>-0.047148</td>
+      <td>0.058632</td>
+      <td>0.032493</td>
+      <td>-0.013668</td>
+      <td>-0.004536</td>
+      <td>0.101136</td>
+      <td>...</td>
+      <td>0.177874</td>
+      <td>-0.008229</td>
+      <td>-0.032429</td>
+      <td>-0.005330</td>
+      <td>-0.033939</td>
+      <td>-0.014487</td>
+      <td>-0.013814</td>
+      <td>-0.008186</td>
+      <td>0.012375</td>
+      <td>-0.083674</td>
+    </tr>
+    <tr>
+      <th>arf_apache</th>
+      <td>-0.001684</td>
+      <td>-0.012926</td>
+      <td>0.003355</td>
+      <td>0.007672</td>
+      <td>-0.020141</td>
+      <td>0.033997</td>
+      <td>-0.032420</td>
+      <td>0.030502</td>
+      <td>-0.058829</td>
+      <td>0.110016</td>
+      <td>...</td>
+      <td>0.002092</td>
+      <td>0.010970</td>
+      <td>0.022008</td>
+      <td>0.107948</td>
+      <td>0.013494</td>
+      <td>0.002247</td>
+      <td>0.011941</td>
+      <td>-0.003657</td>
+      <td>-0.008223</td>
+      <td>0.027309</td>
+    </tr>
+    <tr>
+      <th>intubated_apache</th>
+      <td>0.015396</td>
+      <td>0.081834</td>
+      <td>-0.024906</td>
+      <td>-0.018184</td>
+      <td>-0.128414</td>
+      <td>0.110070</td>
+      <td>-0.060767</td>
+      <td>0.090648</td>
+      <td>-0.041573</td>
+      <td>0.125443</td>
+      <td>...</td>
+      <td>0.607308</td>
+      <td>0.006503</td>
+      <td>0.005196</td>
+      <td>0.002140</td>
+      <td>0.001694</td>
+      <td>-0.008275</td>
+      <td>-0.003382</td>
+      <td>-0.004237</td>
+      <td>-0.011866</td>
+      <td>0.173139</td>
+    </tr>
+    <tr>
+      <th>ventilated_apache</th>
+      <td>0.041296</td>
+      <td>0.120391</td>
+      <td>-0.030714</td>
+      <td>0.021346</td>
+      <td>-0.135643</td>
+      <td>0.130799</td>
+      <td>-0.119281</td>
+      <td>0.098384</td>
+      <td>-0.014534</td>
+      <td>0.159426</td>
+      <td>...</td>
+      <td>1.000000</td>
+      <td>0.005283</td>
+      <td>-0.002289</td>
+      <td>0.010740</td>
+      <td>-0.005178</td>
+      <td>-0.002724</td>
+      <td>-0.002082</td>
+      <td>-0.003462</td>
+      <td>-0.016280</td>
+      <td>0.228661</td>
+    </tr>
+    <tr>
+      <th>aids</th>
+      <td>-0.029477</td>
+      <td>0.008800</td>
+      <td>0.001483</td>
+      <td>0.012408</td>
+      <td>0.001726</td>
+      <td>0.003945</td>
+      <td>0.003664</td>
+      <td>-0.011494</td>
+      <td>-0.008798</td>
+      <td>0.001143</td>
+      <td>...</td>
+      <td>0.005283</td>
+      <td>1.000000</td>
+      <td>0.011409</td>
+      <td>-0.010397</td>
+      <td>0.003273</td>
+      <td>0.025781</td>
+      <td>-0.002471</td>
+      <td>0.021529</td>
+      <td>-0.001611</td>
+      <td>0.004403</td>
+    </tr>
+    <tr>
+      <th>cirrhosis</th>
+      <td>-0.028065</td>
+      <td>0.010737</td>
+      <td>-0.032030</td>
+      <td>-0.001509</td>
+      <td>-0.018497</td>
+      <td>0.016682</td>
+      <td>-0.004327</td>
+      <td>-0.002330</td>
+      <td>-0.015519</td>
+      <td>0.019026</td>
+      <td>...</td>
+      <td>-0.002289</td>
+      <td>0.011409</td>
+      <td>1.000000</td>
+      <td>0.015120</td>
+      <td>0.525905</td>
+      <td>-0.002971</td>
+      <td>-0.005373</td>
+      <td>0.001516</td>
+      <td>-0.005890</td>
+      <td>0.039453</td>
+    </tr>
+    <tr>
+      <th>diabetes_mellitus</th>
+      <td>0.077908</td>
+      <td>-0.016401</td>
+      <td>0.000761</td>
+      <td>-0.010125</td>
+      <td>-0.001163</td>
+      <td>0.012247</td>
+      <td>0.002829</td>
+      <td>0.412437</td>
+      <td>0.139184</td>
+      <td>0.097990</td>
+      <td>...</td>
+      <td>0.010740</td>
+      <td>-0.010397</td>
+      <td>0.015120</td>
+      <td>1.000000</td>
+      <td>0.010647</td>
+      <td>-0.002502</td>
+      <td>0.002890</td>
+      <td>-0.002326</td>
+      <td>-0.013122</td>
+      <td>-0.015784</td>
+    </tr>
+    <tr>
+      <th>hepatic_failure</th>
+      <td>-0.020061</td>
+      <td>0.012787</td>
+      <td>-0.041395</td>
+      <td>-0.004468</td>
+      <td>-0.022059</td>
+      <td>0.017533</td>
+      <td>-0.008266</td>
+      <td>-0.007744</td>
+      <td>-0.017682</td>
+      <td>0.016702</td>
+      <td>...</td>
+      <td>-0.005178</td>
+      <td>0.003273</td>
+      <td>0.525905</td>
+      <td>0.010647</td>
+      <td>1.000000</td>
+      <td>0.003084</td>
+      <td>-0.001567</td>
+      <td>0.001689</td>
+      <td>0.007240</td>
+      <td>0.038864</td>
+    </tr>
+    <tr>
+      <th>immunosuppression</th>
+      <td>0.025007</td>
+      <td>0.054844</td>
+      <td>-0.015864</td>
+      <td>0.034752</td>
+      <td>0.006496</td>
+      <td>0.007783</td>
+      <td>-0.017636</td>
+      <td>-0.006710</td>
+      <td>0.003988</td>
+      <td>-0.001993</td>
+      <td>...</td>
+      <td>-0.002724</td>
+      <td>0.025781</td>
+      <td>-0.002971</td>
+      <td>-0.002502</td>
+      <td>0.003084</td>
+      <td>1.000000</td>
+      <td>0.134934</td>
+      <td>0.103201</td>
+      <td>0.269653</td>
+      <td>0.043973</td>
+    </tr>
+    <tr>
+      <th>leukemia</th>
+      <td>0.030310</td>
+      <td>0.019983</td>
+      <td>-0.016722</td>
+      <td>0.017879</td>
+      <td>0.003900</td>
+      <td>0.003627</td>
+      <td>-0.017838</td>
+      <td>-0.005860</td>
+      <td>-0.004478</td>
+      <td>0.005920</td>
+      <td>...</td>
+      <td>-0.002082</td>
+      <td>-0.002471</td>
+      <td>-0.005373</td>
+      <td>0.002890</td>
+      <td>-0.001567</td>
+      <td>0.134934</td>
+      <td>1.000000</td>
+      <td>0.031380</td>
+      <td>0.006210</td>
+      <td>0.029788</td>
+    </tr>
+    <tr>
+      <th>lymphoma</th>
+      <td>0.023335</td>
+      <td>0.017311</td>
+      <td>-0.012037</td>
+      <td>0.011205</td>
+      <td>-0.001283</td>
+      <td>0.000664</td>
+      <td>-0.009755</td>
+      <td>-0.002676</td>
+      <td>0.000885</td>
+      <td>0.002215</td>
+      <td>...</td>
+      <td>-0.003462</td>
+      <td>0.021529</td>
+      <td>0.001516</td>
+      <td>-0.002326</td>
+      <td>0.001689</td>
+      <td>0.103201</td>
+      <td>0.031380</td>
+      <td>1.000000</td>
+      <td>0.014749</td>
+      <td>0.018722</td>
+    </tr>
+    <tr>
+      <th>solid_tumor_with_metastasis</th>
+      <td>0.025924</td>
+      <td>0.040893</td>
+      <td>-0.008119</td>
+      <td>0.012371</td>
+      <td>-0.000784</td>
+      <td>0.000904</td>
+      <td>-0.010799</td>
+      <td>-0.014106</td>
+      <td>0.011143</td>
+      <td>-0.001841</td>
+      <td>...</td>
+      <td>-0.016280</td>
+      <td>-0.001611</td>
+      <td>-0.005890</td>
+      <td>-0.013122</td>
+      <td>0.007240</td>
+      <td>0.269653</td>
+      <td>0.006210</td>
+      <td>0.014749</td>
+      <td>1.000000</td>
+      <td>0.051105</td>
+    </tr>
+    <tr>
+      <th>hospital_death</th>
+      <td>0.111017</td>
+      <td>0.107818</td>
+      <td>-0.040526</td>
+      <td>0.086666</td>
+      <td>-0.158634</td>
+      <td>-0.008482</td>
+      <td>-0.210100</td>
+      <td>0.081568</td>
+      <td>0.029884</td>
+      <td>0.112465</td>
+      <td>...</td>
+      <td>0.228661</td>
+      <td>0.004403</td>
+      <td>0.039453</td>
+      <td>-0.015784</td>
+      <td>0.038864</td>
+      <td>0.043973</td>
+      <td>0.029788</td>
+      <td>0.018722</td>
+      <td>0.051105</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>25 rows × 25 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#seperate predictors and variables</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>cleaned_apache <span class="op">=</span> apache_score.dropna()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> cleaned_apache.drop(<span class="st">"hospital_death"</span>, axis <span class="op">=</span> <span class="dv">1</span>).dropna()</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> cleaned_apache[<span class="st">"hospital_death"</span>]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size <span class="op">=</span> <span class="fl">0.2</span>, random_state <span class="op">=</span> <span class="dv">69420</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>X_train_const <span class="op">=</span> sm.add_constant(X_train)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>logistic_model <span class="op">=</span> sm.Logit(y_train, X_train_const).fit()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(logistic_model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Optimization terminated successfully.
+         Current function value: 0.214135
+         Iterations 8
+                           Logit Regression Results                           
+==============================================================================
+Dep. Variable:         hospital_death   No. Observations:                59369
+Model:                          Logit   Df Residuals:                    59344
+Method:                           MLE   Df Model:                           24
+Date:                Sun, 04 Feb 2024   Pseudo R-squ.:                  0.2391
+Time:                        20:49:49   Log-Likelihood:                -12713.
+converged:                       True   LL-Null:                       -16707.
+Covariance Type:            nonrobust   LLR p-value:                     0.000
+===============================================================================================
+                                  coef    std err          z      P&gt;|z|      [0.025      0.975]
+-----------------------------------------------------------------------------------------------
+const                           9.0164      1.089      8.281      0.000       6.882      11.150
+age                             0.0336      0.001     27.866      0.000       0.031       0.036
+heart_rate_apache               0.0097      0.001     16.672      0.000       0.009       0.011
+map_apache                     -0.0028      0.000     -7.429      0.000      -0.004      -0.002
+resprate_apache                 0.0137      0.001     11.770      0.000       0.011       0.016
+temp_apache                    -0.2808      0.016    -17.950      0.000      -0.311      -0.250
+d1_spo2_max                    -0.0258      0.009     -2.822      0.005      -0.044      -0.008
+d1_spo2_min                    -0.0274      0.001    -22.494      0.000      -0.030      -0.025
+d1_glucose_max                  0.0009      0.000      4.300      0.000       0.001       0.001
+d1_glucose_min                  0.0015      0.000      3.305      0.001       0.001       0.002
+d1_potassium_max                0.2650      0.030      8.835      0.000       0.206       0.324
+d1_potassium_min                0.0306      0.035      0.869      0.385      -0.038       0.100
+gcs_score_apache               -0.1341      0.005    -28.684      0.000      -0.143      -0.125
+apache_post_operative          -1.2719      0.055    -23.315      0.000      -1.379      -1.165
+arf_apache                      0.4106      0.087      4.727      0.000       0.240       0.581
+intubated_apache                0.2788      0.045      6.263      0.000       0.192       0.366
+ventilated_apache               0.7769      0.046     17.053      0.000       0.688       0.866
+aids                            0.8782      0.442      1.986      0.047       0.012       1.745
+cirrhosis                       0.6898      0.123      5.607      0.000       0.449       0.931
+diabetes_mellitus              -0.2897      0.044     -6.562      0.000      -0.376      -0.203
+hepatic_failure                 0.5227      0.134      3.898      0.000       0.260       0.786
+immunosuppression               0.4545      0.086      5.269      0.000       0.285       0.624
+leukemia                        0.8423      0.142      5.934      0.000       0.564       1.120
+lymphoma                        0.5352      0.201      2.665      0.008       0.142       0.929
+solid_tumor_with_metastasis     0.9792      0.091     10.756      0.000       0.801       1.158
+===============================================================================================</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>logit_apache.columns[:<span class="op">-</span><span class="dv">1</span>][<span class="op">~</span> multipletests(logistic_model.pvalues, alpha<span class="op">=</span><span class="fl">0.05</span>, method<span class="op">=</span><span class="st">'holm'</span>)[<span class="dv">0</span>][<span class="dv">1</span>:]]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Code breakdown:</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># logit_apache.columns[:-1]</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># all columns except for the predictor</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># multipletests(logistic_model.pvalues, alpha=0.05, method='holm')[0][1:]</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># gets the boolean for holms correction and gets all except the intercept.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<pre><code>Index(['d1_potassium_min', 'aids'], dtype='object')</code></pre>
+</div>
+</div>
+<p>Using an alpha level of 0.05 and controlling the FWER using Bonferroni correction, we will reject the null hypothesis that beta_i = 0, if the observed p-value is greater than 0.05/32 = 0.00156. To reject the null hypothesis is to say that the varaible has a non-zero effect on ICU surival rate. That being said, we reject all the hypothesis except for ‘d1_potassium_min’, ‘aids’. Looking into these variables, these nonsignificant test statistics may be explained by the correlation of minimum and maximum potassium. From the correlations table, we can see that there is a 0.64 correlations between the two variables. Hence, it is possible that the effect of potassium_max is already described by the effect of potassium_min. Furthermore, for aids, generally, it is not life threatening with proper treatment, hence having a non-significant effect on hospital survival.</p>
+<p>Generally, it seems that most components of the APACHE II score is signficant in determining hospital death. We would suggest choosing the more extreme value of potassium level and dropping the aids factor when calculating APACHE II score.</p>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>logistic_model.predict(X_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: shapes (14843,24) and (25,) not aligned: 24 (dim 1) != 25 (dim 0)</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
